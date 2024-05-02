@@ -1,0 +1,109 @@
+import React, { useState } from "react";
+import loginBanner from "../../../src/assets/images/login_banner.png"
+import BackArrowIcon from "../../assets/svg/BackArrowIcon.svg"
+import emailIcon from "../../assets/svg/emailIcon.svg"
+import { AuthInput } from "../../components/auth/AuthInput";
+import { SubmitButton } from "../../components/auth/SubmitButton";
+import SideImage from "../../components/auth/SideImage";
+import { Link, useNavigate } from "react-router-dom";
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const [errMessage, setErrMessage] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleInput = (input) => {
+    const { name, value } = input.target;
+    const addColour = (elem) => {
+      elem.target.classList.add('border-cs-error-500');
+      elem.target.classList.add('placeholder:text-cs-error-500')
+      elem.target.classList.remove('bg-cs-grey-55')
+      setErrMessage(prevState => ({
+        ...prevState,
+        [name]: `Invalid ${name}`
+      }));
+    }
+    const removeColour = (elem) => {
+      elem.target.classList.remove('border-cs-error-500');
+      elem.target.classList.remove('placeholder:text-cs-error-500')
+      elem.target.classList.add('bg-cs-grey-55')
+      setErrMessage(prevState => ({
+        ...prevState,
+        [name]: ''
+      }));
+    }
+    if (name === "email") {
+      if ((!ValidateEmail(value))) {
+        addColour(input)
+      } else {
+        removeColour(input)
+      }
+    } else if (name === "password") {
+      if ((!ValidatePassword(value))) {
+        addColour(input)
+      } else {
+        removeColour(input)
+      }
+    }
+
+    if (input.target.value.length === 0) {
+      setErrMessage(prevState => ({
+        ...prevState,
+        [name]: `Enter your ${name}`
+      }));
+    } else {
+      setAuthData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
+  }
+
+  return (
+    <section>
+      <div className=" md:grid grid-cols-2">
+        <div>
+          <SideImage imageSrc={loginBanner} />
+        </div>
+        <div className=" my-[9px] px-6 md:flex md:flex-col md:min-h-dvh justify-between">
+          <img src={BackArrowIcon} alt="back-arrow" className=" w-[30px]" />
+          <div>
+            <h1 className=" my-2 text-[#2C2A2A] font-semibold text-2xl text-center">Forgot Password</h1>
+            <p className=" text-[#545454] text-xs font-normal  text-center">Please enter your email. A One Time Password (OTP)
+              will be sent to you to confirm your email.</p>
+
+            <div className=" flex items-center justify-center gap-x-2">
+              <div className=" bg-[#C43F76] h-[1px] w-14 rounded"></div>
+              <p className=" text-[#090909] font-normal text-[10px] my-1">or enter details below</p>
+              <div className=" bg-[#C43F76] h-[1px] w-14 rounded"></div>
+            </div>
+
+            <div>
+              <AuthInput label="Email Address" action={handleInput} errorMessage={errMessage.email} inputName="email" inputType="email" placeHolder="Enter your Email Address Here" icon={<img src={emailIcon} alt="" />} />
+
+
+
+              <SubmitButton text="Reset Password" action={() => {
+                navigate('/auth/reset-password')
+              }} activate={true} />
+              <div className=" mt-1 mb-6 flex justify-end">
+                <p className=" text-xs font-normal text-[#2C2A2A]">Remember your  password? <Link className=" text-[#C43F76]" to={'/auth/login'}>Login</Link></p>
+              </div>
+            </div>
+          </div>
+
+          <div className="">
+            <p className=" text-[10px] font-normal text-[#090909] text-center my-2">By continuing, you agree to TenderCare <span className=" text-[#C43F76]">Conditions of Use</span> and <span className=" text-[#C43F76]">Privacy Policies</span>.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+
+  )
+}
+
+export default ForgotPassword;
