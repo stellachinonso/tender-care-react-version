@@ -3,16 +3,14 @@ import Header from "../../components/header/Header";
 // import BabySection from "../../components/homepage/BabySection";
 import ContactUs from "../../components/homepage/ContactUs";
 import FAQ from "../../components/homepage/FAQ";
-import HomePageHero from "../../components/homepage/HomePageHero";
-import HeroPage from "../../components/tracker/HeroPage";
+// import HomePageHero from "../../components/homepage/HomePageHero";
 
-const DevelopmentTracker = () => {
+const Resources = () => {
   return (
     <>
       <section>
         <Header />
-        <HeroPage />
-        {/* <BabySection /> */}
+
         <FAQ />
         <ContactUs />
         <Footer />
@@ -21,4 +19,4 @@ const DevelopmentTracker = () => {
   );
 };
 
-export default DevelopmentTracker;
+export default Resources;
